@@ -72,3 +72,12 @@ BM3D (GPU) time: 0.1881 (0.0004) s
 ```
 
 The argument `chunk_size` determines the number of groups to be processed in parallel on the GPU. A larger `chunk_size` increases GPU memory usage but can improve speed. However, in practice, extremely large `chunk_size` leads to poor speed, possibly due to overhead. The default value of `chunk_size=2048` is set according to the experiment shown above run on the RTX 6000 Ada GPU. You may need to adjust it for different GPUs and images.
+
+Acknowledgement
+---------------
+
+This package is for **non-commercial, research, and educational use only.** This restriction is inherited from BM4D, which was developed by Tampere University (TAU), which prohibits commercial use. If you use this package, reference to the original authors (see below) should be given, whenever results that arise from the use of the provided software or any modification of it are made public. 
+
+K. Dabov, A. Foi, V. Katkovnik, and K. Egiazarian, “Image Denoising by Sparse 3-D Transform-Domain Collaborative Filtering,” *IEEE Transactions on Image Processing*, vol. 16, no. 8, pp. 2080–2095, Aug. 2007, doi: [10.1109/TIP.2007.901238](https://ieeexplore.ieee.org/document/4271520).
+
+
