@@ -19,11 +19,19 @@ group_wiener, group_wiener_inv = _transform_matrices(wiener_group_size, 'haar') 
 The purpose of this implementation is to provide a fast and GPU-accelerated version of BM3D, which is beneficial for **fast prototyping** and, in particular, for **integration as a plug-and-play prior** into an iterative image reconstruction algorithm that is already implemented on the GPU (e.g., SigPy). 
 
 
-Requirement
------------
+Installation
+------------
+
+To install from PyPI, the distribution name is `bm3d-cupy` and the import name is `bm3d_cupy`:
 
 ```bash
-pip install cupy PyWavelets
+pip install "bm3d-cupy[cuda13]"
+```
+
+If you are on CUDA 12, use:
+
+```bash
+pip install "bm3d-cupy[cuda12]"
 ```
 
 
@@ -55,9 +63,7 @@ z = cp.asnumpy(z_gpu)
 Result
 ------
 
-On an NVIDIA RTX 6000 Ada, the GPU implementation achieves a speedup of 15.91x compared to the reference CPU implementation for the following cat image.
-
-![bm3d_png](bm3d.png)
+On an NVIDIA RTX 6000 Ada, the GPU implementation achieves a speedup of 15.91x compared to the reference CPU implementation for the cat image.
 
 ```
 BM3D (CPU) time: 3.0155 (0.0226) s

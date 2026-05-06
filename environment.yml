@@ -1,0 +1,9 @@
+name: bm3d-cupy
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pywavelets
+  - pip:
+      - "-e .[cuda12,benchmark,dev]"

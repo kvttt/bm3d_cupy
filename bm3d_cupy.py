@@ -1,9 +1,26 @@
-import cupy as cp
-import pywt
-from cupyx.scipy.fft import dct
+"""GPU-accelerated BM3D denoising built on CuPy."""
+
+try:
+    import cupy as cp
+    import pywt
+    from cupyx.scipy.fft import dct
+except ImportError as exc:
+    raise ImportError(
+        "bm3d_cupy requires CuPy and PyWavelets. Install a matching CuPy wheel, "
+        "for example 'pip install \"bm3d-cupy[cuda13]\"', before importing this module."
+    ) from exc
 
 import warnings
+
 warnings.filterwarnings("ignore", category=UserWarning, module="pywt")
+
+__version__ = "0.1.2"
+__all__ = [
+    "bm3d_gpu",
+    "get_dct_matrix",
+    "get_transform_matrices",
+    "get_wavelet_matrix",
+]
 
 
 EPS = 2 ** (-52)
