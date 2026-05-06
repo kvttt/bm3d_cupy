@@ -23,7 +23,7 @@ Requirement
 -----------
 
 ```bash
-pip install cupy bm4d
+pip install cupy PyWavelets
 ```
 
 
@@ -76,8 +76,6 @@ The argument `chunk_size` determines the number of groups to be processed in par
 Acknowledgement
 ---------------
 
-This package is for **non-commercial, research, and educational use only.** This restriction is inherited from BM4D, which was developed by Tampere University (TAU), which prohibits commercial use. If you use this package, reference to the original authors (see below) should be given, whenever results that arise from the use of the provided software or any modification of it are made public. 
+If you use this package, reference to the original authors (see below) is recommended.
 
 K. Dabov, A. Foi, V. Katkovnik, and K. Egiazarian, “Image Denoising by Sparse 3-D Transform-Domain Collaborative Filtering,” *IEEE Transactions on Image Processing*, vol. 16, no. 8, pp. 2080–2095, Aug. 2007, doi: [10.1109/TIP.2007.901238](https://ieeexplore.ieee.org/document/4271520).
-
-

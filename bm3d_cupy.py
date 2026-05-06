@@ -1,8 +1,45 @@
-from bm4d import _get_transf_matrix
 import cupy as cp
+import pywt
+from cupyx.scipy.fft import dct
+
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="pywt")
 
 
 EPS = 2 ** (-52)
+
+
+def get_wavelet_matrix(n, wavelet, level=None):
+    if level is None:
+        level = n.bit_length() - 1
+    I = cp.eye(n)
+    matrix = cp.empty((n, n), dtype=I.dtype)
+    for i in range(n):
+        basis = cp.asnumpy(I[:, i])
+        coeffs = pywt.wavedec(basis, wavelet, mode='periodization', level=level)
+        matrix[:, i] = cp.hstack([cp.asarray(coeff) for coeff in coeffs])
+    matrix = matrix / cp.linalg.norm(matrix, axis=0)
+    return matrix, cp.linalg.inv(matrix)
+
+
+def get_dct_matrix(n, norm='ortho'):
+    matrix = dct(cp.eye(n), norm=norm, axis=0)
+    inverse = matrix.T if norm == 'ortho' else cp.linalg.inv(matrix)
+    return matrix, inverse
+
+
+def get_transform_matrices(n, transform_name):
+    n = int(n)
+    transform_name = transform_name.lower()
+    if transform_name == 'dct':
+        return get_dct_matrix(n, norm='ortho')
+    elif (n & (n - 1)) == 0:
+        try:
+            pywt.Wavelet(transform_name)
+            return get_wavelet_matrix(n, transform_name)
+        except ValueError:
+            pass
+    raise ValueError(f"Unsupported transform '{transform_name}' for size n={n}.")
 
 
 def bm3d_gpu(
@@ -47,8 +84,8 @@ def bm3d_gpu(
     ht_group_size = int(min(max(1, int(ht_group_size)), n_candidates))  # stage 1 (hard-threshold) group size
     wiener_group_size = int(min(max(1, int(wiener_group_size)), n_candidates))  # stage 2 (Wiener filtering) group size
     # transform matrices
-    def _transform_matrices(n, transform_name):  # get transform matrices from bm4d code
-        forward, inverse = _get_transf_matrix(n, transform_name, 0, False)
+    def _transform_matrices(n, transform_name):  # get transform matrices
+        forward, inverse = get_transform_matrices(n, transform_name)
         return cp.asarray(forward, dtype=cp.float32), cp.asarray(inverse, dtype=cp.float32)
     # 2d transforms (along spatial dimensions)
     spatial_ht, spatial_ht_inv = _transform_matrices(p, 'bior1.5')  # biorthogonal WT, (p, p)
