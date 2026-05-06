@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bm3d-cupy"
-version = "0.1.2"
+version = "0.1.3"
 description = "GPU-accelerated BM3D denoising with CuPy"
 readme = "README.md"
 requires-python = ">=3.9"

@@ -1,9 +1,9 @@
 BM3D with CuPy
 ==============
 
-This repository contains a GPU-accelerated implementation of BM3D using CuPy. The main script is `bm3d_cupy.py`, which provides a function `bm3d_gpu` that can be used to denoise 2D images `(H, W)` or `(H, W, C)` on the GPU. The `bm3d_cupy_benchmark.py` script benchmarks the performance of the GPU implementation against the CPU version.
+This repository contains a GPU-accelerated implementation of BM3D using CuPy. The main script is `bm3d_cupy.py`, which provides a function `bm3d_gpu` that can be used to denoise 2D images of shape `(H, W)` or `(H, W, C)` on the GPU. The `bm3d_cupy_benchmark.py` script benchmarks the performance of the GPU implementation against the CPU version.
 
-This implementation is intended to be as close as possible to the reference CPU implementation in the official BM3D implementation, which can be found [here](https://pypi.org/project/bm3d/). The transforms used in this implementation are directly taken from the official implementation, and most parameters are set to the default values used in the official implementation. 
+This implementation is intended to be as close as possible to the reference CPU implementation in the official BM3D implementation, which can be found [here](https://pypi.org/project/bm3d/). Most of the transforms used in this implementation are exactly the same as the official implementation. 
 
 Different transforms than the default can also be used. However, you would need to change the code yourself:
 
@@ -22,13 +22,13 @@ The purpose of this implementation is to provide a fast and GPU-accelerated vers
 Installation
 ------------
 
-To install from PyPI, the distribution name is `bm3d-cupy` and the import name is `bm3d_cupy`:
+To install from PyPI, the distribution name is `bm3d-cupy` and the import name is `bm3d_cupy`. To use this package with CUDA 13, use:
 
 ```bash
 pip install "bm3d-cupy[cuda13]"
 ```
 
-If you are on CUDA 12, use:
+To use this package with CUDA 12, use:
 
 ```bash
 pip install "bm3d-cupy[cuda12]"
