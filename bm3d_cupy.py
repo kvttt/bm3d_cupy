@@ -51,11 +51,7 @@ def get_transform_matrices(n, transform_name):
     if transform_name == 'dct':
         return get_dct_matrix(n, norm='ortho')
     elif (n & (n - 1)) == 0:
-        try:
-            pywt.Wavelet(transform_name)
-            return get_wavelet_matrix(n, transform_name)
-        except ValueError:
-            pass
+        return get_wavelet_matrix(n, transform_name)
     raise ValueError(f"Unsupported transform '{transform_name}' for size n={n}.")
 
 

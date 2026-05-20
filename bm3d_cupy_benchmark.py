@@ -55,7 +55,7 @@ def benchmark_torch(y_torch, sigma, n_runs=10, chunk_size=2048):
         if y_torch.is_cuda:
             torch.cuda.synchronize()
         tic = time.perf_counter()
-        out = bm3d_torch(y_torch, sigma)
+        out = bm3d_torch(y_torch, sigma, chunk_size=chunk_size)
         if y_torch.is_cuda:
             torch.cuda.synchronize()
         times.append(time.perf_counter() - tic)
@@ -85,7 +85,7 @@ print('\n')
 device = torch.device('cuda')
 x_torch = torch.from_numpy(x).to(device=device)
 y_torch = torch.from_numpy(y).to(device=device)
-z_torch, torch_times = benchmark_torch(y_torch, sigma, n_runs=10)
+z_torch, torch_times = benchmark_torch(y_torch, sigma, n_runs=10, chunk_size=2048)
 z_torch_np = z_torch.detach().cpu().numpy()
 psnr_val_torch = psnr(x, z_torch_np, data_range=1.0)
 ssim_val_torch = ssim(x, z_torch_np, data_range=1.0, channel_axis=-1)
